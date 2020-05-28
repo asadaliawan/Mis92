@@ -1,0 +1,91 @@
+# Java Gradle CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+
+    working_directory: ~/repo
+
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: gradle dependencies
+
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+
+      # run tests!
+      - run: gradle test
+      public class MainActivity extends AppCompatActivity {
+
+
+    private TextView Name;
+    private TextView Password;
+    private TextView Info;
+    private Button Login;
+    private int counter=5;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Name =(EditText)findViewById(R.id.textname);
+        Password=(EditText)findViewById(R.id.passtext);
+        Info=(TextView)findViewById(R.id.tvInfo);
+        Login=(Button)findViewById(R.id.btnlogin);
+        Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 validate(Name.getText().toString(),Password.getText().toString());
+            }
+        });
+
+
+        }
+
+        private void validate(String userName, String userPassword ) {
+            if ((userName .equals("Deadly")) && (userPassword .equals("0058") )) {
+
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(intent);
+
+            }else{
+                    counter--;
+
+                    Info.setText("No.Of Attempts Remaining:" +String.valueOf(counter));
+
+                    if (counter==0){
+                        Login.setEnabled(false);
+                    }
+                }
+
+        }
+
+        }
+
